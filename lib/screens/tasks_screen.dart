@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
+import 'package:todoey_flutter/models/task.dart';
 
+class TasksScreen extends StatefulWidget {
 
-class TasksScreen extends StatelessWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
 
-  Widget buildBottomSheet;
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: "Buy Milk"),
+    Task(name: "Buy Eggs"),
+    Task(name: "Buy Bread"),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
-        onPressed: (){
-          showModalBottomSheet(context: context, builder: (context) => AddTaskScreen());
-        },
         child: Icon(Icons.add),
+        onPressed: (){
+          showModalBottomSheet(
+            context: context, 
+            builder: (context) => AddTaskScreen(
+            (newTaskTitle){
+              setState(() {
+                tasks.add(Task(name: newTaskTitle));
+              });
+            }
+          ));
+        },
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start, 
@@ -31,7 +49,7 @@ class TasksScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 30.0,
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: 10.0),
                 Text(
                   "Todoey",
                   style: TextStyle(
@@ -41,27 +59,27 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "12 Tasks",
+                  "${tasks.length.toString()} Tasks",
                   style: TextStyle(color: Colors.white,fontSize: 18.0),
                 ),
               ],
             ),
           ),
           Expanded(
-              child: Container(
-                child: Padding(
+            child: Container(
+              child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TasksList(),
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  )
+                  child: TasksList(tasks: tasks),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );
