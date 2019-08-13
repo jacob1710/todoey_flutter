@@ -8,6 +8,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: TasksScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.brown,
+        canvasColor: Colors.transparent,
+      ),
     );
   }
 }

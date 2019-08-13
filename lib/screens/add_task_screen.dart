@@ -5,7 +5,7 @@ class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF757575),
+      color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
