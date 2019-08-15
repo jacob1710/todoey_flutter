@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/models/data.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskScreen extends StatelessWidget {
-
-  final Function addTaskCallback;
-
-  AddTaskScreen(this.addTaskCallback);
-
   @override
   Widget build(BuildContext context) {
     String newTaskTitle;
@@ -40,7 +37,7 @@ class AddTaskScreen extends StatelessWidget {
               },
               onSubmitted: (finalText){
                 if (finalText != "" && finalText != null){
-                  addTaskCallback(finalText);
+                  Provider.of<Data>(context).addToList(Task(name: finalText));
                   Navigator.pop(context);
                 }
               },
@@ -61,7 +58,7 @@ class AddTaskScreen extends StatelessWidget {
                 //_textEditingController.clear();
                 //Task task = Task(name: newTaskTitle);
                 if(newTaskTitle != "" && newTaskTitle != null){
-                  addTaskCallback(newTaskTitle);
+                  Provider.of<Data>(context).addToList(Task(name: newTaskTitle));
                   print(newTaskTitle);
                   Navigator.pop(context);
                 }
